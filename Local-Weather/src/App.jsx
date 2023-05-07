@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [search, setSearch] = useState("");
+
+  const apiKey = "a7d21723ff40c0e628b4d0449cd0708b";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${search}&appid=${apiKey}`
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="section-layout">
+      <div className="header-div">
+        <h1 className="header-text">Local Weather</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <form className="search-area-layout">
+        <div className="mx-3">
+          <input
+            type="text"
+            placeholder="Enter a city..."
+            className="input input-bordered w-full max-w-xs search-input"
+          />
+        </div>
+        <div>
+          <button className="btn btn-outline">Search</button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
-export default App
+export default App;

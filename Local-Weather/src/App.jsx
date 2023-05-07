@@ -1,16 +1,20 @@
 import { useState } from "react";
 
 function App() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("Orlando");
 
-  const apiKey = "a7d21723ff40c0e628b4d0449cd0708b";
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const response = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${search}&appid=${apiKey}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${apiKey}`
     );
+
+    const data = await response.json();
+
+    console.log(data)
   };
 
   return (
@@ -18,7 +22,7 @@ function App() {
       <div className="header-div">
         <h1 className="header-text">Local Weather</h1>
       </div>
-      <form className="search-area-layout">
+      <form className="search-area-layout" onSubmit={handleSubmit}>
         <div className="mx-3">
           <input
             type="text"
